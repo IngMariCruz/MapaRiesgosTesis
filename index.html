@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Riesgos para Proyectos de Grado</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Mapa de Riesgos para Proyectos de Grado</h1>
+
+        <div class="tabs">
+            <div class="tab-list">
+                <button class="tab-button active" data-tab="info">Información del Proyecto</button>
+                <button class="tab-button" data-tab="risks">Identificar Riesgos</button>
+                <button class="tab-button" data-tab="matrix">Mapa de Riesgos</button>
+                <button class="tab-button" data-tab="summary">Resumen</button>
+            </div>
+
+            <div class="tab-content active" id="info">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Información del Proyecto</h2>
+                        <p class="card-description">Ingresa los datos básicos de tu proyecto de grado</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="form-group">
+                            <label for="studentName">Nombre del Estudiante</label>
+                            <input type="text" id="studentName" placeholder="Ingresa tu nombre completo">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="projectName">Nombre del Proyecto</label>
+                            <input type="text" id="projectName" placeholder="Ingresa el nombre de tu proyecto">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="description">Descripción del Proyecto</label>
+                            <textarea id="description" rows="4" placeholder="Describe brevemente tu proyecto de grado"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comments">Comentarios Adicionales</label>
+                            <textarea id="comments" rows="4" placeholder="Agrega cualquier comentario relevante sobre tu proyecto o los riesgos identificados"></textarea>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button class="button" onclick="switchTab('risks')">Continuar a Identificar Riesgos</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="risks">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Identificar Riesgos</h2>
+                        <p class="card-description">Agrega los riesgos identificados en tu proyecto y califícalos según su impacto y probabilidad</p>
+                    </div>
+                    <div class="card-content">
+                        <form id="risk-form">
+                            <div class="form-group">
+                                <label for="riskName">Nombre del Riesgo</label>
+                                <input type="text" id="riskName" placeholder="Ej: Retraso en la entrega de equipos" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="riskDescription">Descripción</label>
+                                <textarea id="riskDescription" placeholder="Describe brevemente este riesgo"></textarea>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <div class="label-with-help">
+                                        <label for="impact">Impacto</label>
+                                        <div class="tooltip">
+                                            <span class="help-icon">?</span>
+                                            <div class="tooltip-content">
+                                                <ul>
+                                                    <li><strong>Muy bajo:</strong> Aunque llegaran a ocurrir, no causarían ningún perjuicio real al proyecto.</li>
+                                                    <li><strong>Bajo:</strong> Su impacto sería leve y fácilmente manejable, sin afectar el desarrollo general.</li>
+                                                    <li><strong>Medio:</strong> Podrían generar retrasos o complicaciones considerables si llegan a suceder.</li>
+                                                    <li><strong>Alto:</strong> Su ocurrencia podría poner en grave riesgo el cumplimiento de los objetivos.</li>
+                                                    <li><strong>Crítico:</strong> De ocurrir, podrían ocasionar la cancelación o el fracaso total del proyecto.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <select id="impact">
+                                        <option value="Muy bajo">Muy bajo</option>
+                                        <option value="Bajo">Bajo</option>
+                                        <option value="Medio" selected>Medio</option>
+                                        <option value="Alto">Alto</option>
+                                        <option value="Crítico">Crítico</option>
+                                    </select>
+                                    <p class="description-text" id="impact-description">Podrían generar retrasos o complicaciones considerables si llegan a suceder.</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="label-with-help">
+                                        <label for="probability">Probabilidad</label>
+                                        <div class="tooltip">
+                                            <span class="help-icon">?</span>
+                                            <div class="tooltip-content">
+                                                <ul>
+                                                    <li><strong>Improbable:</strong> Son posibles en la teoría, poco probables en la realidad.</li>
+                                                    <li><strong>Probable:</strong> Sería poco común que se presenten en la práctica.</li>
+                                                    <li><strong>Ocasional:</strong> Tienen igual probabilidad de ocurrir que de no ocurrir.</li>
+                                                    <li><strong>Posible:</strong> Es bastante factible que ocurran en algún punto del proyecto.</li>
+                                                    <li><strong>Altamente probable:</strong> Es casi seguro que pase si no se toman medidas preventivas.</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <select id="probability">
+                                        <option value="Improbable">Improbable</option>
+                                        <option value="Probable">Probable</option>
+                                        <option value="Ocasional" selected>Ocasional</option>
+                                        <option value="Posible">Posible</option>
+                                        <option value="Altamente probable">Altamente probable</option>
+                                    </select>
+                                    <p class="description-text" id="probability-description">Tienen igual probabilidad de ocurrir que de no ocurrir.</p>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mitigation">Estrategia de Mitigación (Opcional)</label>
+                                <textarea id="mitigation" placeholder="¿Cómo planeas mitigar este riesgo?"></textarea>
+                            </div>
+
+                            <button type="submit" class="button full-width">Agregar Riesgo</button>
+                        </form>
+
+                        <div class="risks-container">
+                            <h3>Riesgos Identificados</h3>
+                            <div id="risks-list" class="risks-list">
+                                <div class="empty-message">No hay riesgos identificados. Agrega tu primer riesgo usando el formulario.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="button-group">
+                            <button class="button outline" onclick="switchTab('info')">Volver a Información</button>
+                            <button class="button" onclick="switchTab('matrix')">Ver Mapa de Riesgos</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="matrix">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Mapa de Riesgos</h2>
+                        <p class="card-description">Visualización de los riesgos identificados según su impacto y probabilidad</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="risk-matrix-container">
+                            <div id="risk-matrix" class="risk-matrix"></div>
+                            
+                            <div class="matrix-legend">
+                                <div class="legend-item">
+                                    <div class="color-box very-low"></div>
+                                    <span>Muy bajo</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="color-box low"></div>
+                                    <span>Bajo</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="color-box medium"></div>
+                                    <span>Medio</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="color-box high"></div>
+                                    <span>Alto</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="color-box critical"></div>
+                                    <span>Crítico</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="button-group">
+                            <button class="button outline" onclick="switchTab('risks')">Volver a Riesgos</button>
+                            <button class="button" onclick="switchTab('summary')">Ver Resumen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="summary">
+                <div class="card">
+                    <div class="card-header">
+                        <h2>Resumen del Proyecto</h2>
+                        <p class="card-description">Resumen completo de la información del proyecto y los riesgos identificados</p>
+                    </div>
+                    <div class="card-content">
+                        <div class="summary-section">
+                            <h3>Información del Proyecto</h3>
+                            <div class="summary-grid">
+                                <div>
+                                    <p class="label">Nombre del Estudiante</p>
+                                    <p id="summary-student-name" class="value">No especificado</p>
+                                </div>
+                                <div>
+                                    <p class="label">Nombre del Proyecto</p>
+                                    <p id="summary-project-name" class="value">No especificado</p>
+                                </div>
+                            </div>
+                            <div>
+                                <p class="label">Descripción</p>
+                                <p id="summary-description" class="value">No especificada</p>
+                            </div>
+                            <div>
+                                <p class="label">Comentarios</p>
+                                <p id="summary-comments" class="value">No hay comentarios</p>
+                            </div>
+                        </div>
+
+                        <div class="summary-section">
+                            <h3>Mapa de Riesgos</h3>
+                            <div id="summary-matrix" class="risk-matrix"></div>
+                            
+                            <div class="matrix-legend">
+                                <div class="legend-item">
+                                    <div class="color-box very-low"></div>
+                                    <span>Muy bajo</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="color-box low"></div>
+                                    <span>Bajo</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="color-box medium"></div>
+                                    <span>Medio</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="color-box high"></div>
+                                    <span>Alto</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="color-box critical"></div>
+                                    <span>Crítico</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="summary-section">
+                            <h3>Lista de Riesgos</h3>
+                            <div id="summary-risks-list" class="risks-list">
+                                <div class="empty-message">No hay riesgos identificados.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="button-group">
+                            <button class="button outline" onclick="switchTab('matrix')">Volver al Mapa</button>
+                            <div>
+                                <button class="button outline" onclick="printReport()">Imprimir</button>
+                                <button class="button" onclick="exportJSON()">Exportar JSON</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plantilla para el tooltip de la matriz -->
+        <div id="matrix-tooltip" class="matrix-tooltip">
+            <div class="tooltip-header">
+                <span id="tooltip-severity">Severidad: Medio</span>
+            </div>
+            <div class="tooltip-content">
+                <p id="tooltip-details">Impacto: Medio, Probabilidad: Ocasional</p>
+                <div id="tooltip-risks">
+                    <p>No hay riesgos en esta categoría</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Plantilla para imprimir -->
+    <div id="print-template" class="print-only">
+        <h1>Mapa de Riesgos para Proyectos de Grado</h1>
+        
+        <div class="print-section">
+            <h2>Información del Proyecto</h2>
+            <div class="print-grid">
+                <div>
+                    <p class="label">Nombre del Estudiante</p>
+                    <p id="print-student-name" class="value">No especificado</p>
+                </div>
+                <div>
+                    <p class="label">Nombre del Proyecto</p>
+                    <p id="print-project-name" class="value">No especificado</p>
+                </div>
+            </div>
+            <div>
+                <p class="label">Descripción</p>
+                <p id="print-description" class="value">No especificada</p>
+            </div>
+            <div>
+                <p class="label">Comentarios</p>
+                <p id="print-comments" class="value">No hay comentarios</p>
+            </div>
+        </div>
+
+        <div class="print-section">
+            <h2>Mapa de Riesgos</h2>
+            <div id="print-matrix" class="risk-matrix"></div>
+            
+            <div class="matrix-legend">
+                <div class="legend-item">
+                    <div class="color-box very-low"></div>
+                    <span>Muy bajo</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box low"></div>
+                    <span>Bajo</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box medium"></div>
+                    <span>Medio</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box high"></div>
+                    <span>Alto</span>
+                </div>
+                <div class="legend-item">
+                    <div class="color-box critical"></div>
+                    <span>Crítico</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="print-section">
+            <h2>Lista de Riesgos</h2>
+            <div id="print-risks-list" class="risks-list">
+                <div class="empty-message">No hay riesgos identificados.</div>
+            </div>
+        </div>
+
+        <div class="print-footer">
+            <p>Generado el <span id="print-date"></span></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
